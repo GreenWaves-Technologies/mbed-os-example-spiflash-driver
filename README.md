@@ -1,7 +1,7 @@
-## Getting Started With The mbed-os Example for the SPI Flash Block Device 
+## Getting Started With The mbed-os Example for the SPI Flash Block Device
 
-This is the mbed-os example for the SPIFBlockDevice driver. 
-See the [spiflash-driver](https://github.com/armmbed/spiflash-driver) repository for more information.
+This is the mbed-os example for the SPIFBlockDevice driver.
+See the [spi-driver](https://github.com/GreenWaves-Technologies/spif-driver) repository for more information.
 
 This guide outlines the steps to get a SPI NOR flash part working on an mbed OS platform.
 
@@ -11,27 +11,27 @@ Please install [mbed CLI](https://github.com/ARMmbed/mbed-cli#installing-mbed-cl
 
 This example can be used on an mbedos platform with a SPI NOR part connected to the SPI pins (on the Arduino header, for example).
 
-This document uses the K64F as an example. Simply change the relevant options (e.g. -m K64F) to be appropriate for your target.
+This document uses the GAP8 as an example. Simply change the relevant options (e.g. -m GAP8) to be appropriate for your target.
 
 ## Create the Example Application
 
 From the command-line, import the example:
 
 ```
-mbed import mbed-os-example-spiflash-driver
+mbed import https://github.com/GreenWaves-Technologies/mbed-os-example-spiflash-driver.gitspif-driver.git
 ```
 
-You should see: 
+You should see:
 
-	[mbed] Importing program "mbed-os-example-spiflash-driver" from "https://github.com/ARMmbed/mbed-os-example-spiflash-driver" at latest revision in the current branch
-	[mbed] Adding library "mbed-os" from "https://github.com/ARMmbed/mbed-os" at rev #f4864dc6429e
+	[mbed] Importing program "mbed-os-example-spiflash-driver" from "https://github.com/GreenWaves-Technologies/spif-driver" at latest revision in the current branch
+	[mbed] Adding library "mbed-os" from "https://github.com/GreenWaves-Technologies/mbed-os" at tag gwt-mbed-os-5.9.3
 
 Move into the newly created directory:
 
 ```
 cd mbed-os-example-spiflash-driver
 ```
-	
+
 If the mbed-os library was not automatically added (see trace above), do the following to import mbed-os:
 
 ```
@@ -41,51 +41,47 @@ mbed new .
 
 ## Build the Example
 
-Invoke `mbed compile`, and specify the name of your platform and your favorite toolchain (`GCC_ARM`, `ARM`, `IAR`). For example, for the GCC_ARM toolchain:
+Invoke `mbed compile`, and specify the name of your platform and your favorite toolchain (`GCC_RISCV`, `GCC_ARM`, `ARM`, `IAR`). For example, for the GCC_RISCV toolchain:
 
 ```
-mbed compile -m K64F -t GCC_ARM
+mbed compile -m GAP8 -t GCC_RISCV
 ```
 
 Your PC may take a few minutes to compile your code. At the end, you see the following result:
 
-	[snip]
-	+--------------------------+-------+-------+-------+
-	| Module                   | .text | .data |  .bss |
-	+--------------------------+-------+-------+-------+
-	| Fill                     |    86 |     4 |  2077 |
-	| Misc                     | 33975 |  2212 |   492 |
-	| drivers                  |   558 |     0 |    32 |
-	| features/storage         |    42 |     0 |   184 |
-	| hal                      |   450 |     0 |     8 |
-	| platform                 |  1232 |     4 |   269 |
-	| rtos                     |   135 |     4 |     4 |
-	| rtos/rtx                 |  5915 |    20 |  6870 |
-	| targets/TARGET_Freescale | 12447 |    12 |   384 |
-	| Subtotals                | 54840 |  2256 | 10320 |
-	+--------------------------+-------+-------+-------+
-	Allocated Heap: 24576 bytes
-	Allocated Stack: unknown
-	Total Static RAM memory (data + bss): 12576 bytes
-	Total RAM memory (data + bss + heap + stack): 37152 bytes
-	Total Flash memory (text + data + misc): 58136 bytes
-	
-	Image: .\BUILD\K64F\GCC_ARM\mbed-os-example-spiflash-driver.bin	
-	
-	
-## <a name="run-the-example-binary-on-the-k64f"></a> Run the Example Binary on the K64F 
+```
+Elf2Bin: mbed-os-example-spiflash-driver
++-----------------+-------+-------+------+
+| Module          | .text | .data | .bss |
++-----------------+-------+-------+------+
+| BUILD/GAP8      | 22178 |   380 | 1311 |
+| [fill]          |     2 |     4 |   13 |
+| [lib]/c.a       |  9576 |  2096 |   60 |
+| [lib]/gcc.a     |  1798 |     0 |    0 |
+| mbed-os/targets |   288 |     4 |   28 |
+| Subtotals       | 33842 |  2484 | 1412 |
++-----------------+-------+-------+------+
+Total Static RAM memory (data + bss): 3896 bytes
+Total Flash memory (text + data): 36326 bytes
+```
 
-Copy the binary from `<root_dir>/mbed-os-example-spiflash-driver/BUILD/K64F/GCC_ARM/mbed-os-example-spiflash-driver.bin` to the K64F:
 
-1. Connect your mbed device to the computer over USB.
-1. Copy the binary file to the mbed device.
-1. Press the reset button to start the program.
-1. Open the UART of the board in your favorite UART viewing program. For example, `screen /dev/ttyACM0`.
+## <a name="run-the-example-binary-on-the-GAP8"></a> Run the Example Binary on the GAP8
+
+Copy the binary from `<root_dir>/mbed-os-example-spiflash-driver/BUILD/GAP8/GCC_RISCV/mbed-os-example-spiflash-driver.elf` to the GAP8:
+
+1. Connect your device (with sensor board) to the computer over USB.
+1. Execute the script (make sure you have already install the [gap_sdk](https://github.com/GreenWaves-Technologies/gap_sdk)) :
+
+```
+source ./USER_PATH/gap_sdk/sourceme.sh
+run_mbed ./BUILD/GAP8/GCC_RISCV/mbed-os-example-spiflash-driver.elf
+```
 
 After connecting a serial console and resetting the target, the following trace should be seen:
 
 	spif test
-	spif size: 2097152
+	spif size: 8388608
 	spif read size: 1
 	spif program size: 1
 	spif erase size: 4096
@@ -105,4 +101,3 @@ After connecting a serial console and resetting the target, the following trace 
  ```
  pip install mbed-cli --upgrade
  ```
- 

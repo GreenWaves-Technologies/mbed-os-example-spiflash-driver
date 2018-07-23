@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// Here's an example using the MX25R SPI flash device on the K82F
+// Here's an example using the MX25R SPI flash device on the GAP8
 #include "mbed.h"
 #include "SPIFBlockDevice.h"
 
 /* This configuration of the SPI Flash Driver pins is for
  * the the SPI pins on the Arduino header to the SPI NOR part.
  */
-SPIFBlockDevice spif(D11, D12, D13, D10);
-
+SPIFBlockDevice spif(SPI0_MOSI, SPI0_MISO, SPI0_SCLK, SPI0_CSN1, 20000000);
 
 int main() {
     printf("spif test\n");
@@ -46,4 +44,5 @@ int main() {
 
     // Deinitialize the device
     spif.deinit();
+    free(buffer);
 }
