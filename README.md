@@ -18,13 +18,14 @@ This document uses the GAP8 as an example. Simply change the relevant options (e
 From the command-line, import the example:
 
 ```
-mbed import https://github.com/GreenWaves-Technologies/mbed-os-example-spiflash-driver.gitspif-driver.git
+mbed import https://github.com/GreenWaves-Technologies/mbed-os-example-spiflash-driver
 ```
 
 You should see:
 
-	[mbed] Importing program "mbed-os-example-spiflash-driver" from "https://github.com/GreenWaves-Technologies/spif-driver" at latest revision in the current branch
-	[mbed] Adding library "mbed-os" from "https://github.com/GreenWaves-Technologies/mbed-os" at tag gwt-mbed-os-5.9.3
+
+	[mbed] Adding library "spif-driver" from "https://github.com/GreenWaves-Technologies/spif-driver" at rev #decf10be9b7d
+	[mbed] Adding library "mbed-os" from "https://github.com/GreenWaves-Technologies/mbed-os" at rev #b0f31ea774ac
 
 Move into the newly created directory:
 
@@ -67,8 +68,6 @@ Total Flash memory (text + data): 36326 bytes
 
 
 ## <a name="run-the-example-binary-on-the-GAP8"></a> Run the Example Binary on the GAP8
-
-Copy the binary from `<root_dir>/mbed-os-example-spiflash-driver/BUILD/GAP8/GCC_RISCV/mbed-os-example-spiflash-driver.elf` to the GAP8:
 
 1. Connect your device (with sensor board) to the computer over USB.
 1. Execute the script (make sure you have already install the [gap_sdk](https://github.com/GreenWaves-Technologies/gap_sdk)) :
