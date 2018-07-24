@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+  Modifications copyright (C) 2018 GreenWaves Technologies
+  - Change spif pin mapping for GAP8
+*/
+
 // Here's an example using the MX25R SPI flash device on the GAP8
 #include "mbed.h"
 #include "SPIFBlockDevice.h"
